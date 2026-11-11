@@ -13,6 +13,16 @@ export function GoogleShoppingSimulator({ products }: GoogleShoppingSimulatorPro
   const [selectedTier, setSelectedTier] = useState<'BRONZE' | 'PRATA' | 'OURO' | 'VIP'>('VIP');
   const [isGoogleLoggedIn, setIsGoogleLoggedIn] = useState<boolean>(true);
 
+  // Sync selectedProduct whenever products list changes
+  React.useEffect(() => {
+    if (products && products.length > 0) {
+      const exists = products.find(p => p.id === selectedProduct?.id);
+      if (!exists) {
+        setSelectedProduct(products[0]);
+      }
+    }
+  }, [products, selectedProduct?.id]);
+
   if (!selectedProduct) return null;
 
   const basePrice = selectedProduct.salePrice ?? selectedProduct.regularPrice;
@@ -102,9 +112,11 @@ export function GoogleShoppingSimulator({ products }: GoogleShoppingSimulatorPro
             <div className="relative aspect-square bg-[#202124] rounded-lg overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                key={selectedProduct.id}
                 src={selectedProduct.imageLink}
                 alt={selectedProduct.title}
-                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-opacity duration-200"
               />
               {isGoogleLoggedIn && (
                 <div className="absolute top-2 left-2 bg-[#1e8e3e] text-white text-[10px] font-bold px-2 py-0.5 rounded shadow">
@@ -116,7 +128,10 @@ export function GoogleShoppingSimulator({ products }: GoogleShoppingSimulatorPro
             {/* Merchant info & title */}
             <div className="space-y-1">
               <div className="text-[11px] text-[#9aa0a6] font-medium flex items-center justify-between">
-                <span>Aura Store Bagy</span>
+                <span className="text-white font-semibold flex items-center gap-1">
+                  Secret Outlet
+                  <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400">GMC 118399377</span>
+                </span>
                 <span className="flex items-center gap-0.5 text-amber-400 font-bold">★ 4.9 (420)</span>
               </div>
               <h4 className="text-xs font-medium text-[#e8eaed] line-clamp-2 leading-snug">
@@ -174,7 +189,7 @@ export function GoogleShoppingSimulator({ products }: GoogleShoppingSimulatorPro
           <div className="space-y-3 text-xs">
             <div className="flex justify-between py-1.5 border-b border-white/5">
               <span className="text-slate-400 font-mono">g:program_label</span>
-              <span className="font-mono text-white">Clube Fidelidade Bagy</span>
+              <span className="font-mono text-white">Clube Fidelidade Secret Outlet</span>
             </div>
 
             <div className="flex justify-between py-1.5 border-b border-white/5">

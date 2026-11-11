@@ -42,7 +42,7 @@ export default function AdminPage() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch('/api/admin/metrics');
+      const res = await fetch('/api/admin/metrics', { cache: 'no-store' });
       const json = await res.json();
       if (json.success) {
         setData(json);
