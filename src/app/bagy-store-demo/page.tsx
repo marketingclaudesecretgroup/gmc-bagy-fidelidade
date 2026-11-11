@@ -72,18 +72,18 @@ export default function BagyStoreDemoPage() {
         {/* Bagy Storefront Simulation Header */}
         <div className="rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-white/10 p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-white text-xl shadow-lg shadow-purple-600/30">
-              B
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center font-bold text-white text-xl shadow-lg shadow-purple-600/30">
+              SO
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-white text-base">Aura Store Bagy Demo</span>
-                <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-mono uppercase font-semibold border border-purple-500/30">
-                  Bagy Storefront v2
+                <span className="font-bold text-white text-base">Secret Outlet Storefront Demo</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono uppercase font-semibold border border-emerald-500/30">
+                  GMC 118399377
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                Ambiente de demonstração ao vivo da loja com o Widget Flutuante de Fidelidade ativo no canto inferior direito
+                Catálogo real da Secret Outlet sincronizado com o Google Merchant Center e o Widget Flutuante de Fidelidade
               </p>
             </div>
           </div>
