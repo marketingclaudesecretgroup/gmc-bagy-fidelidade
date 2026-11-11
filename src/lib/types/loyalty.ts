@@ -6,17 +6,29 @@
  */
 
 export type TierLevel = 'BRONZE' | 'PRATA' | 'OURO' | 'VIP';
+export type UserRole = 'ADMIN' | 'MEMBER';
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  tier?: TierLevel;
+  avatarUrl?: string;
+  googleAccountLinked: boolean;
+  pointsBalance?: number;
+}
 
 export interface LoyaltyTier {
   id: string;
   name: string;
   label: TierLevel;
   minPointsToQualify: number;
-  pointsMultiplier: number; // e.g. 1.0 = 1 pt/R$, 1.5 = 1.5 pt/R$, 2.0 = 2 pt/R$
-  memberDiscountPercent: number; // e.g. 5% off for Prata, 10% off for Ouro, 15% off for VIP
+  pointsMultiplier: number; // e.g. 1.0 = 1 pt/R$, 1.3 = 1.3 pt/R$, 1.8 = 1.8 pt/R$, 2.5 = 2.5 pt/R$
+  memberDiscountPercent: number; // e.g. 5% off for Prata, 10% off for Ouro, 18% off for VIP
   hasFreeShipping: boolean;
   freeShippingMinSpend: number; // 0 for unlimited, or e.g. 149 for members vs 299 for public
-  cashbackPercent: number; // e.g. 3%, 5%, 8%, 10%
+  cashbackPercent: number; // e.g. 3%, 5%, 8%, 12%
   color: string;
   badgeBg: string;
   badgeBorder: string;
@@ -91,7 +103,7 @@ export interface ProductCatalogItem {
  * Matches Google Merchant Center XML and TSV spec
  */
 export interface GMCLoyaltyAttribute {
-  program_label: string; // e.g. "Clube Fidelidade Bagy"
+  program_label: string; // e.g. "Clube Fidelidade Secret Outlet"
   tier_label: TierLevel; // "BRONZE" | "PRATA" | "OURO" | "VIP"
   price: string; // e.g. "179.90 BRL" (Member price)
   cashback_for_future_use?: string; // e.g. "15.00 BRL"
@@ -105,6 +117,7 @@ export interface ProgramConfig {
   programSlug: string;
   storeName: string;
   storeUrl: string;
+  gmcAccountId: string; // e.g. '118399377' for Secret Outlet
   bagyStoreId: string;
   bagyApiKey: string;
   bagyWebhookSecret: string;
@@ -151,14 +164,14 @@ export interface MetricsSummary {
   totalPointsIssued: number;
   totalPointsRedeemed: number;
   pointsLiabilityBrl: number;
-  memberRepurchaseRate: number; // percentage, e.g. 43.8%
-  nonMemberRepurchaseRate: number; // e.g. 14.2%
-  memberAvgLtvBrl: number; // e.g. 540.00
-  nonMemberAvgLtvBrl: number; // e.g. 192.00
+  memberRepurchaseRate: number; // percentage, e.g. 46.4%
+  nonMemberRepurchaseRate: number; // e.g. 15.2%
+  memberAvgLtvBrl: number; // e.g. 564.80
+  nonMemberAvgLtvBrl: number; // e.g. 189.50
   freeShippingOrdersCount: number;
   freeShippingCostBrl: number;
   freeShippingRevenueBrl: number;
   freeShippingRoiPercent: number; // (Revenue - Cost) / Cost
-  gmcImpressionBoostPercent: number; // e.g. +34%
-  gmcCtrBoostPercent: number; // e.g. +22%
+  gmcImpressionBoostPercent: number; // e.g. +37.8%
+  gmcCtrBoostPercent: number; // e.g. +24.5%
 }

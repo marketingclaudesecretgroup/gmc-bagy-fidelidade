@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Sparkles, ShoppingBag, ShieldCheck, Zap, Database, CheckCircle2, TrendingUp, Gift, ExternalLink } from 'lucide-react';
+import { ArrowRight, Sparkles, ShoppingBag, ShieldCheck, Zap, Database, CheckCircle2, TrendingUp, Gift, ExternalLink, User, Shield } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -12,110 +12,133 @@ export default function HomePage() {
         <div className="relative z-10 max-w-3xl space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-mono uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            Ecossistema Completo de Fidelidade Bagy + Google Merchant Center
+            Ecossistema Secret Outlet + Google Merchant Center (Conta 118399377)
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            Fidelidade Inteligente para Bagy com{' '}
+            Clube Fidelidade Secret Outlet com{' '}
             <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
               Superpoderes do Google Shopping
             </span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-            Plataforma ponta a ponta inspirada no <strong className="text-white">Fidelizar Mais</strong>, especializada em e-commerce Bagy com suporte nativo às diretrizes oficiais do Google Merchant Center (<code className="text-xs bg-slate-800 text-indigo-300 px-1.5 py-0.5 rounded">loyalty_program</code>, Frete Grátis exclusivo para membros e Schema.org).
+            Plataforma ponta a ponta inspirada no <strong className="text-white">Fidelizar Mais</strong>, especializada no e-commerce da <strong className="text-white">Secret Outlet</strong> na Bagy com controle de acesso (RBAC), Portal do Membro, e suporte nativo às diretrizes oficiais do Google Merchant Center (<code className="text-xs bg-slate-800 text-indigo-300 px-1.5 py-0.5 rounded">loyalty_program</code> e Frete Grátis exclusivo).
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <Link
-              href="/admin"
+              href="/membro"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 transition-all text-sm sm:text-base group"
             >
-              Acessar Painel Administrativo
+              <User className="w-4 h-4" />
+              Acessar Portal do Membro
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <Link
-              href="/bagy-store-demo"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 border border-white/10 text-white font-semibold text-sm sm:text-base transition-all"
+              href="/admin"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 border border-purple-500/30 text-white font-semibold text-sm sm:text-base transition-all"
             >
-              <ShoppingBag className="w-4 h-4 text-purple-400" />
-              Testar Loja Bagy + Widget
+              <Shield className="w-4 h-4 text-purple-400" />
+              Painel Admin (Lojista)
             </Link>
 
             <Link
-              href="/clube-fidelidade"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition-colors"
+              href="/bagy-store-demo"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-white/10 text-slate-300 hover:text-white text-sm font-medium transition-colors"
             >
-              Ver Landing Page Google
-              <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              <ShoppingBag className="w-4 h-4 text-emerald-400" />
+              Testar Loja Secret Outlet
             </Link>
           </div>
         </div>
       </div>
 
-      {/* 4 Pillars Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="glass-card p-6 rounded-2xl space-y-4">
-          <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
-            <ShieldCheck className="w-6 h-6" />
+      {/* 2 Personas Distinction Card */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Persona 1: Admin */}
+        <div className="glass-card p-6 sm:p-8 rounded-3xl border border-purple-500/30 space-y-4 relative overflow-hidden bg-gradient-to-br from-purple-950/20 to-slate-900/60">
+          <div className="flex items-center justify-between">
+            <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-purple-500/10 text-purple-300 border border-purple-500/20">
+              Persona 1: Lojista / Admin
+            </span>
+            <Shield className="w-6 h-6 text-purple-400" />
           </div>
-          <h3 className="text-lg font-bold text-white">Google Merchant Center</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Feeds XML & TSV com suporte aos atributos oficiais <code className="text-[11px] bg-slate-800 text-blue-300 px-1 rounded">loyalty_program</code>, preços especiais para membros e frete grátis na Busca do Google.
+
+          <h3 className="text-xl font-bold text-white">Equipe Secret Outlet</h3>
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Área restrita para gestão financeira, feeds e regras do clube:
           </p>
+
+          <ul className="space-y-2 text-xs text-slate-300">
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-400" />
+              Dashboard financeiro, LTV (R$ 564 vs R$ 189) e ROI de Frete Grátis (689%).
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-400" />
+              Gerenciador de Feeds XML e TSV sincronizados com o GMC Account 118399377.
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-400" />
+              Configuração de Níveis (Bronze, Prata, Ouro, VIP Black).
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-purple-400" />
+              CRM de clientes, extrato global e disparador de Webhooks Bagy.
+            </li>
+          </ul>
+
           <div className="pt-2">
-            <a
-              href="/api/gmc/feed.xml"
-              target="_blank"
-              className="text-xs text-blue-400 hover:text-blue-300 font-mono flex items-center gap-1"
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300"
             >
-              /api/gmc/feed.xml <ArrowRight className="w-3 h-3" />
-            </a>
+              Abrir Painel Administrativo <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 
-        <div className="glass-card p-6 rounded-2xl space-y-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-            <Zap className="w-6 h-6" />
-          </div>
-          <h3 className="text-lg font-bold text-white">Webhooks & API Bagy</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Sincronização em tempo real de pedidos pagos, novos clientes, crédito de pontos por real gasto e geração automática de cupons na API da Bagy.
-          </p>
-          <div className="pt-2">
-            <span className="text-xs text-purple-400 font-mono flex items-center gap-1">
-              POST /api/webhooks/bagy
+        {/* Persona 2: Client Member */}
+        <div className="glass-card p-6 sm:p-8 rounded-3xl border border-indigo-500/30 space-y-4 relative overflow-hidden bg-gradient-to-br from-indigo-950/20 to-slate-900/60">
+          <div className="flex items-center justify-between">
+            <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+              Persona 2: Cliente Membro
             </span>
+            <User className="w-6 h-6 text-indigo-400" />
           </div>
-        </div>
 
-        <div className="glass-card p-6 rounded-2xl space-y-4">
-          <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-            <Gift className="w-6 h-6" />
-          </div>
-          <h3 className="text-lg font-bold text-white">Widget Flutuante Bagy</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Script JS isolado com Shadow DOM para injetar em qualquer loja Bagy. Exibe extrato, níveis Bronze/Prata/Ouro/VIP e resgate de cupom 1-click.
+          <h3 className="text-xl font-bold text-white">Comprador da Secret Outlet</h3>
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Portal exclusivo em <code className="text-indigo-300 font-mono">/membro</code> sem acesso a dados de lojista:
           </p>
-          <div className="pt-2">
-            <span className="text-xs text-emerald-400 font-mono flex items-center gap-1">
-              public/widget/bagy-loyalty.js
-            </span>
-          </div>
-        </div>
 
-        <div className="glass-card p-6 rounded-2xl space-y-4">
-          <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-            <TrendingUp className="w-6 h-6" />
-          </div>
-          <h3 className="text-lg font-bold text-white">ROI & Métricas de LTV</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Dashboard financeiro com cálculo de LTV de membros (R$ 564 vs R$ 189), taxa de recompra de 46.4% e ROI de 689% no benefício de frete grátis.
-          </p>
+          <ul className="space-y-2 text-xs text-slate-300">
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />
+              Saldo de pontos atual e valor correspondente em R$ de desconto.
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />
+              Barra de progresso visual mostrando quanto falta para o próximo nível.
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />
+              Selo de Conta Google Vinculada para Frete Grátis no Google Shopping.
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />
+              Resgate de cupons com 1-click e cópia automática para o checkout.
+            </li>
+          </ul>
+
           <div className="pt-2">
-            <Link href="/admin" className="text-xs text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1">
-              Abrir Dashboard <ArrowRight className="w-3 h-3" />
+            <Link
+              href="/membro"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-400 hover:text-indigo-300"
+            >
+              Abrir Portal do Membro <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
@@ -125,13 +148,13 @@ export default function HomePage() {
       <div className="glass-panel p-8 rounded-3xl border border-white/10 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
           <div>
-            <h2 className="text-2xl font-bold text-white">Conformidade com Diretrizes Oficiais Google</h2>
-            <p className="text-sm text-slate-400">Resumo de implementação dos requisitos do Google Merchant Center para programas de fidelidade</p>
+            <h2 className="text-2xl font-bold text-white">Conformidade GMC & Bagy</h2>
+            <p className="text-sm text-slate-400">Implementação de alta fidelidade das especificações oficiais do Google Merchant Center</p>
           </div>
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              100% Homologado
+              GMC Account 118399377 Ready
             </span>
           </div>
         </div>
@@ -150,10 +173,10 @@ export default function HomePage() {
           <div className="bg-slate-900/60 p-5 rounded-xl border border-white/5 space-y-2">
             <div className="font-semibold text-white text-sm flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Frete Grátis p/ Membros Logados
+              Login com Conta Google & Vínculo
             </div>
             <p className="text-xs text-slate-400">
-              Associação direta com o serviço de frete do Merchant Center via rótulo de envio e sincronização da Conta Google do cliente.
+              Vínculo transparente com a Conta Google do cliente para ativar frete grátis e preços de membro na SERP.
             </p>
           </div>
 
@@ -163,37 +186,7 @@ export default function HomePage() {
               Landing Page Exigida (/clube-fidelidade)
             </div>
             <p className="text-xs text-slate-400">
-              Página pública indexável com regras de qualificação de níveis, benefícios transparentes, política de frete e termos oficiais.
-            </p>
-          </div>
-
-          <div className="bg-slate-900/60 p-5 rounded-xl border border-white/5 space-y-2">
-            <div className="font-semibold text-white text-sm flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Schema.org LoyaltyProgram JSON-LD
-            </div>
-            <p className="text-xs text-slate-400">
-              Marcação semântica estruturada com <code className="text-slate-300">LoyaltyProgramTier</code> e <code className="text-slate-300">TierBenefit</code> para Rich Snippets na busca orgânica.
-            </p>
-          </div>
-
-          <div className="bg-slate-900/60 p-5 rounded-xl border border-white/5 space-y-2">
-            <div className="font-semibold text-white text-sm flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Bagy Coupons API Engine
-            </div>
-            <p className="text-xs text-slate-400">
-              Geração de códigos de cupom dinâmicos com expiração e valor mínimo para resgate direto no carrinho da loja Bagy.
-            </p>
-          </div>
-
-          <div className="bg-slate-900/60 p-5 rounded-xl border border-white/5 space-y-2">
-            <div className="font-semibold text-white text-sm flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Simulador Visual Google Shopping
-            </div>
-            <p className="text-xs text-slate-400">
-              Pré-visualização realista de como os produtos da loja aparecem nos resultados de busca com os selos exclusivos de membro.
+              Página pública com termos legais, níveis, benefícios e JSON-LD semântico Schema.org LoyaltyProgram.
             </p>
           </div>
         </div>

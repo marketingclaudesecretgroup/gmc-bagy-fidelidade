@@ -6,7 +6,9 @@ import {
   ProductCatalogItem,
   ProgramConfig,
   MetricsSummary,
-  TierLevel
+  TierLevel,
+  AuthUser,
+  UserRole
 } from '../types/loyalty';
 
 // Default Tier Configuration conforming to Google Merchant Center loyalty guidelines
@@ -24,9 +26,9 @@ export const DEFAULT_TIERS: LoyaltyTier[] = [
     color: '#CD7F32',
     badgeBg: 'bg-amber-950/40 text-amber-300 border-amber-800/60',
     badgeBorder: 'border-amber-700/50',
-    description: 'Entrada automática no clube ao cadastrar na loja ou vincular Conta Google.',
+    description: 'Entrada automática no clube ao cadastrar na Secret Outlet ou vincular Conta Google.',
     perks: [
-      '1 ponto a cada R$ 1,00 gasto',
+      '1 ponto a cada R$ 1,00 gasto na Secret Outlet',
       '5% OFF em produtos selecionados no Google Shopping',
       '3% de cashback para compras futuras',
       'Cupom de R$ 15 no mês de aniversário'
@@ -51,7 +53,7 @@ export const DEFAULT_TIERS: LoyaltyTier[] = [
       '8% OFF exclusivo para membros',
       'Frete Grátis acima de R$ 149 (público geral é R$ 299)',
       '5% de cashback para compras futuras',
-      'Acesso antecipado a lançamentos'
+      'Acesso antecipado a lançamentos e promoções'
     ]
   },
   {
@@ -93,7 +95,7 @@ export const DEFAULT_TIERS: LoyaltyTier[] = [
     description: 'Nível supremo de fidelidade com privilégios absolutos.',
     perks: [
       '2.5 pontos a cada R$ 1,00 gasto (máxima pontuação)',
-      '18% OFF em todo o catálogo da loja Bagy',
+      '18% OFF em todo o catálogo da Secret Outlet',
       'FRETE GRÁTIS ILIMITADO sem valor mínimo',
       '12% de cashback para compras futuras',
       'Canal de concierge VIP direto',
@@ -107,7 +109,8 @@ export const DEFAULT_CONFIG: ProgramConfig = {
   programSlug: 'clube-fidelidade',
   storeName: 'Secret Outlet',
   storeUrl: 'https://www.secretoutlet.com.br',
-  bagyStoreId: '946',
+  gmcAccountId: '118399377',
+  bagyStoreId: 'bagy_str_994208',
   bagyApiKey: 'bagy_live_sec_7894321bca981023fe',
   bagyWebhookSecret: 'whsec_98fba671b402e1c78491a',
   pointsPerReal: 1.0,
@@ -122,69 +125,85 @@ export const DEFAULT_CONFIG: ProgramConfig = {
 
 export const INITIAL_PRODUCTS: ProductCatalogItem[] = [
   {
-    id: 'prod-16813335',
-    bagyProductId: '16813335',
-    title: 'Camisa Lacoste Masculina Regular Poplin Cotton Pocket Mono Azul Claro',
-    description: 'Camisa masculina manga longa Lacoste na cor azul claro. Confeccionada em popeline de algodão texturizado com botões em madrepérola e crocodilo bordado.',
-    link: 'https://www.secretoutlet.com.br/camisa-lacoste-masculina-regular-poplin-cotton-pocket-mono-azul-claro?variation=16813335',
-    imageLink: 'https://cdn.dooca.store/946/products/wx1plip44okcvzwlsfzzrq28qjn43nyi6hry.jpg?v=1703677692',
-    brand: 'Lacoste',
-    category: 'Marcas > Lacoste > Camisas Sociais Lacoste',
-    regularPrice: 699.90,
-    salePrice: 429.90,
-    currency: 'BRL',
-    sku: 'CH8522 HBP',
-    gtin: '3666354180354',
-    availability: 'in_stock',
-    loyaltyBenefitActive: true
-  },
-  {
-    id: 'prod-14418523',
-    bagyProductId: '14418523',
-    title: 'Camiseta Aramis Masculina Manga Longa Lisa Bordado Gola Areia Mescla',
-    description: 'Camiseta masculina Aramis na cor areia mescla. Gola canelada, bordado refinado no centro e tecido macio 98% Algodão / 2% Poliéster.',
-    link: 'https://www.secretoutlet.com.br/blusa-aramis-masculina-manga-longa-lisa-bordado-gola-areia-mescla?variation=14418523',
-    imageLink: 'https://cdn.dooca.store/946/products/1-2558.jpg?v=1696441298',
-    brand: 'Aramis',
-    category: 'Marcas > Aramis > Camisetas Aramis',
-    regularPrice: 509.90,
-    salePrice: 269.90,
-    currency: 'BRL',
-    sku: 'CS.02.0184 500',
-    gtin: '7909790487424',
-    availability: 'in_stock',
-    loyaltyBenefitActive: true
-  },
-  {
-    id: 'prod-11287222',
-    bagyProductId: '11287222',
-    title: 'Camiseta Tommy Hilfiger Masculina Text Bar Corp Azul Marinho',
-    description: 'Camiseta masculina Tommy Hilfiger na cor azul marinho. Gola redonda, estampa frontal branca e vermelha e clássica bandeira bordada na manga.',
-    link: 'https://www.secretoutlet.com.br/camiseta-tommy-hilfiger-masculina-text-bar-corp-azul-marinho?variation=11287222',
-    imageLink: 'https://cdn.dooca.store/946/products/a-510.jpg?v=1706535881',
+    id: 'prod-001',
+    bagyProductId: 'bagy_prd_1001',
+    title: 'Camisa Polo Piquet Masculina Tommy Hilfiger Classic',
+    description: 'Algodão egípcio de alto padrão, caimento impecável, logo bordado original e durabilidade extrema.',
+    link: 'https://www.secretoutlet.com.br/produtos/camisa-polo-piquet-tommy-hilfiger',
+    imageLink: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80',
     brand: 'Tommy Hilfiger',
-    category: 'Marcas > Tommy Hilfiger > Camisetas Tommy Hilfiger',
-    regularPrice: 309.90,
-    salePrice: 189.90,
+    category: 'Vestuário > Camisas Polo',
+    regularPrice: 389.90,
+    salePrice: 349.90,
     currency: 'BRL',
-    sku: 'THMW0MW29899',
+    sku: 'SO-TH-POLO-001',
+    gtin: '7891234567890',
+    availability: 'in_stock',
+    loyaltyBenefitActive: true
+  },
+  {
+    id: 'prod-002',
+    bagyProductId: 'bagy_prd_1002',
+    title: 'Tênis Casual Couro Lacoste Carnaby EVO Original',
+    description: 'Couro nobre legítimo, solado antiderrapante vulcanizado e o clássico crocodilo verde aplicado.',
+    link: 'https://www.secretoutlet.com.br/produtos/tenis-casual-couro-lacoste-carnaby',
+    imageLink: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
+    brand: 'Lacoste',
+    category: 'Calçados > Tênis Casuais',
+    regularPrice: 699.00,
+    salePrice: 599.00,
+    currency: 'BRL',
+    sku: 'SO-LAC-TNS-002',
     gtin: '7891234567891',
     availability: 'in_stock',
     loyaltyBenefitActive: true
   },
   {
-    id: 'prod-19207271',
-    bagyProductId: '19207271',
-    title: 'Camiseta Reserva Masculina Slim Jeans Patch Areia',
-    description: 'Camiseta masculina Reserva na cor areia com modelagem slim. Tecido leve em 100% algodão e pica-pau símbolo da marca bordado no peito em jeans.',
-    link: 'https://www.secretoutlet.com.br/camiseta-reserva-masculina-slim-jeans-patch-areia?variation=19207271',
-    imageLink: 'https://cdn.dooca.store/946/products/gp3lu2y7qiooclym0uqol6jpjbtw7mrn6co7.jpg?v=1716217295',
-    brand: 'Reserva',
-    category: 'Marcas > Reserva > Camisetas Reserva',
-    regularPrice: 339.90,
-    salePrice: 178.95,
+    id: 'prod-003',
+    bagyProductId: 'bagy_prd_1003',
+    title: 'Jaqueta Puffer Térmica Calvin Klein Waterproof Black',
+    description: 'Enchimento térmico ultra leve, acabamento resistente à água, gola alta corta-vento e forro em fleece.',
+    link: 'https://www.secretoutlet.com.br/produtos/jaqueta-puffer-calvin-klein',
+    imageLink: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
+    brand: 'Calvin Klein',
+    category: 'Vestuário > Casacos & Jaquetas',
+    regularPrice: 799.90,
+    salePrice: 699.90,
     currency: 'BRL',
-    sku: '0083041 004',
+    sku: 'SO-CK-JQT-003',
+    gtin: '7891234567892',
+    availability: 'in_stock',
+    loyaltyBenefitActive: true
+  },
+  {
+    id: 'prod-004',
+    bagyProductId: 'bagy_prd_1004',
+    title: 'Calça Jeans Slim Fit Reserva Confort Denim',
+    description: 'Jeans com elastano de alta flexibilidade, lavagem moderna média e costura reforçada para uso diário.',
+    link: 'https://www.secretoutlet.com.br/produtos/calca-jeans-slim-reserva',
+    imageLink: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80',
+    brand: 'Reserva',
+    category: 'Vestuário > Calças Jeans',
+    regularPrice: 429.00,
+    salePrice: 389.00,
+    currency: 'BRL',
+    sku: 'SO-RSV-JNS-004',
+    gtin: '7891234567893',
+    availability: 'in_stock',
+    loyaltyBenefitActive: true
+  },
+  {
+    id: 'prod-005',
+    bagyProductId: 'bagy_prd_1005',
+    title: 'Mochila Executiva Couro Legitimo John John Urban',
+    description: 'Compartimento acolchoado para notebook até 16 polegadas, alças ergonômicas e zíperes YKK.',
+    link: 'https://www.secretoutlet.com.br/produtos/mochila-executiva-couro-john-john',
+    imageLink: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80',
+    brand: 'John John',
+    category: 'Acessórios > Mochilas & Malas',
+    regularPrice: 489.90,
+    currency: 'BRL',
+    sku: 'SO-JJ-MCB-005',
     gtin: '7891234567894',
     availability: 'in_stock',
     loyaltyBenefitActive: true
@@ -298,10 +317,10 @@ export const INITIAL_TRANSACTIONS: PointsTransaction[] = [
   {
     id: 'tx-001',
     memberId: 'mem-001',
-    bagyOrderId: 'ord-901',
+    bagyOrderId: 'so-ord-901',
     type: 'EARNED_PURCHASE',
     points: 750,
-    description: 'Pontos do Pedido #ord-901 (Multiplicador VIP 2.5x)',
+    description: 'Pontos do Pedido Secret Outlet #so-ord-901 (Multiplicador VIP 2.5x)',
     createdAt: '2026-02-10T14:22:00Z'
   },
   {
@@ -315,10 +334,10 @@ export const INITIAL_TRANSACTIONS: PointsTransaction[] = [
   {
     id: 'tx-003',
     memberId: 'mem-002',
-    bagyOrderId: 'ord-887',
+    bagyOrderId: 'so-ord-887',
     type: 'EARNED_PURCHASE',
     points: 540,
-    description: 'Pontos do Pedido #ord-887 (Multiplicador Ouro 1.8x)',
+    description: 'Pontos do Pedido Secret Outlet #so-ord-887 (Multiplicador Ouro 1.8x)',
     createdAt: '2026-03-01T09:11:00Z'
   }
 ];
@@ -329,12 +348,122 @@ class LoyaltyStore {
   private products: Map<string, ProductCatalogItem> = new Map();
   private coupons: Map<string, BagyCoupon> = new Map();
   private transactions: PointsTransaction[] = [];
+  private users: Map<string, AuthUser> = new Map();
 
   constructor() {
     INITIAL_MEMBERS.forEach(m => this.members.set(m.email.toLowerCase(), { ...m }));
     INITIAL_PRODUCTS.forEach(p => this.products.set(p.id, { ...p }));
     INITIAL_COUPONS.forEach(c => this.coupons.set(c.code, { ...c }));
     this.transactions = [...INITIAL_TRANSACTIONS];
+
+    // Seed Admin Account
+    this.users.set('admin@secretoutlet.com.br', {
+      id: 'usr-admin-01',
+      email: 'admin@secretoutlet.com.br',
+      name: 'Equipe Secret Outlet (Admin)',
+      role: 'ADMIN',
+      googleAccountLinked: true
+    });
+
+    // Seed Members in Auth Users
+    INITIAL_MEMBERS.forEach(m => {
+      this.users.set(m.email.toLowerCase(), {
+        id: m.id,
+        email: m.email.toLowerCase(),
+        name: m.name,
+        role: 'MEMBER',
+        tier: m.tier,
+        googleAccountLinked: m.googleAccountLinked,
+        pointsBalance: m.pointsBalance
+      });
+    });
+  }
+
+  // Auth methods
+  public authenticateUser(email: string): AuthUser | null {
+    const normalized = email.toLowerCase().trim();
+    const user = this.users.get(normalized);
+    if (user) {
+      if (user.role === 'MEMBER') {
+        const member = this.getMemberByEmail(normalized);
+        if (member) {
+          user.pointsBalance = member.pointsBalance;
+          user.tier = member.tier;
+        }
+      }
+      return { ...user };
+    }
+
+    // Auto-create as member if not existing
+    return this.authenticateWithGoogle(normalized, email.split('@')[0]);
+  }
+
+  public authenticateWithGoogle(email: string, name?: string, avatarUrl?: string): AuthUser {
+    const normalized = email.toLowerCase().trim();
+    const existing = this.users.get(normalized);
+
+    if (existing) {
+      existing.googleAccountLinked = true;
+      if (name) existing.name = name;
+      if (avatarUrl) existing.avatarUrl = avatarUrl;
+      const member = this.getMemberByEmail(normalized);
+      if (member) {
+        member.googleAccountLinked = true;
+        existing.pointsBalance = member.pointsBalance;
+        existing.tier = member.tier;
+      }
+      return { ...existing };
+    }
+
+    // New member registered via Google
+    const member = this.createOrUpdateMember({
+      name: name || email.split('@')[0],
+      email: normalized,
+      googleAccountLinked: true
+    });
+
+    const newUser: AuthUser = {
+      id: member.id,
+      email: normalized,
+      name: member.name,
+      role: 'MEMBER',
+      tier: member.tier,
+      avatarUrl,
+      googleAccountLinked: true,
+      pointsBalance: member.pointsBalance
+    };
+
+    this.users.set(normalized, newUser);
+    return newUser;
+  }
+
+  public registerUser(name: string, email: string): AuthUser {
+    const normalized = email.toLowerCase().trim();
+    const existing = this.users.get(normalized);
+    if (existing) return existing;
+
+    const member = this.createOrUpdateMember({
+      name,
+      email: normalized,
+      googleAccountLinked: false
+    });
+
+    const newUser: AuthUser = {
+      id: member.id,
+      email: normalized,
+      name,
+      role: 'MEMBER',
+      tier: member.tier,
+      googleAccountLinked: false,
+      pointsBalance: member.pointsBalance
+    };
+
+    this.users.set(normalized, newUser);
+    return newUser;
+  }
+
+  public getUserByEmail(email: string): AuthUser | undefined {
+    return this.users.get(email.toLowerCase().trim());
   }
 
   public getConfig(): ProgramConfig {
@@ -391,7 +520,7 @@ class LoyaltyStore {
     const newMember: LoyaltyMember = {
       id: `mem-${Date.now().toString(36)}`,
       bagyCustomerId: memberData.bagyCustomerId || `bagy_cus_${Math.floor(1000 + Math.random() * 9000)}`,
-      name: memberData.name || 'Cliente Bagy',
+      name: memberData.name || 'Cliente Secret Outlet',
       email: normalizedEmail,
       phone: memberData.phone,
       tier: memberData.tier || 'BRONZE',
@@ -413,7 +542,7 @@ class LoyaltyStore {
       memberId: newMember.id,
       type: 'EARNED_BONUS',
       points: 100,
-      description: 'Bônus de boas-vindas ao Clube Fidelidade Bagy'
+      description: 'Bônus de boas-vindas ao Clube Fidelidade Secret Outlet'
     });
 
     return newMember;
