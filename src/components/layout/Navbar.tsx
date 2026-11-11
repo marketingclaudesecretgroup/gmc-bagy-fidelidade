@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/context/AuthContext';
-import { Sparkles, Shield, User, LogOut, Coins, ShoppingBag, ExternalLink } from 'lucide-react';
+import { Sparkles, Shield, User, LogOut, ExternalLink } from 'lucide-react';
 
 export function Navbar() {
   const { user, isAuthenticated, role, logout } = useAuth();
@@ -23,54 +23,49 @@ export function Navbar() {
               <div className="flex items-center gap-2">
                 <span className="font-bold text-sm lg:text-base tracking-tight text-white">Secret Outlet</span>
                 <span className="text-[10px] uppercase font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  GMC 118399377
+                  Clube Oficial
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 hidden sm:block">Clube Fidelidade & Bagy Engine</p>
+              <p className="text-[11px] text-slate-400 hidden sm:block">Programa de Fidelidade & Vantagens</p>
             </div>
           </Link>
         </div>
 
-        {/* Links & Auth State */}
+        {/* Navigation & Contextual Links */}
         <div className="flex items-center gap-2 sm:gap-4">
-          {/* Admin link only highlighted if admin */}
-          {role === 'ADMIN' ? (
+          <Link
+            href="/clube-fidelidade"
+            className="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 transition-colors hidden sm:block"
+          >
+            Regulamento & Tiers
+          </Link>
+
+          {/* If authenticated as ADMIN */}
+          {isAuthenticated && role === 'ADMIN' && (
             <Link
               href="/admin"
-              className="text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg bg-purple-950/80 text-purple-300 border border-purple-500/40 hover:bg-purple-900 transition-colors flex items-center gap-1.5"
+              className="text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-lg bg-purple-950/80 text-purple-300 border border-purple-500/40 hover:bg-purple-900 transition-colors flex items-center gap-1.5"
             >
               <Shield className="w-3.5 h-3.5 text-purple-400" />
               Painel Admin
             </Link>
-          ) : (
+          )}
+
+          {/* If authenticated as MEMBER */}
+          {isAuthenticated && role !== 'ADMIN' && (
             <Link
               href="/membro"
-              className="text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg bg-indigo-950/80 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-900 transition-colors flex items-center gap-1.5"
+              className="text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-lg bg-indigo-950/80 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-900 transition-colors flex items-center gap-1.5"
             >
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              Meu Portal
+              Meu Saldo
               {user?.pointsBalance !== undefined && (
                 <span className="font-mono text-emerald-400 font-bold ml-1">{user.pointsBalance.toLocaleString()} pts</span>
               )}
             </Link>
           )}
 
-          <Link
-            href="/bagy-store-demo"
-            className="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 transition-colors hidden md:flex items-center gap-1.5"
-          >
-            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-            Loja Demo
-          </Link>
-
-          <Link
-            href="/clube-fidelidade"
-            className="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 transition-colors hidden sm:block"
-          >
-            Landing Page GMC
-          </Link>
-
-          {/* User Session Switcher / Logout */}
+          {/* User Session Switcher or Login Button */}
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2 pl-2 border-l border-white/10">
               <div className="text-right hidden sm:block">
@@ -92,7 +87,7 @@ export function Navbar() {
               className="text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-md shadow-indigo-600/30 transition-all flex items-center gap-1.5"
             >
               <User className="w-3.5 h-3.5" />
-              Entrar
+              Entrar no Clube
             </Link>
           )}
         </div>
