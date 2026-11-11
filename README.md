@@ -2,6 +2,30 @@
 
 > Plataforma completa de Programa de Fidelidade e Recompensas especializada para e-commerce Bagy (Locaweb Company), com integração nativa às diretrizes do Google Merchant Center para programas de fidelidade (`loyalty_program`). Inspirada no Fidelizar Mais com arquitetura de alta performance.
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint/new?repo=https://github.com/marketingclaudesecretgroup/gmc-bagy-fidelidade)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/marketingclaudesecretgroup/gmc-bagy-fidelidade)
+[![GMC Compliance](https://img.shields.io/badge/Google%20Merchant%20Center-100%2F100%20Optimal-success)](https://support.google.com/merchants/answer/12827255)
+
+---
+
+## 🚀 Como Colocar Online no Render (1-Clique)
+
+Você pode hospedar esta plataforma 100% online e externa à Bagy usando o Render:
+
+1. **Clique no botão abaixo para criar o serviço via Blueprint no Render:**
+   [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint/new?repo=https://github.com/marketingclaudesecretgroup/gmc-bagy-fidelidade)
+
+2. Ou conecte diretamente no Dashboard do Render:
+   - Acesse [Render Dashboard](https://dashboard.render.com/) > **New** > **Web Service**
+   - Conecte o repositório GitHub: `marketingclaudesecretgroup/gmc-bagy-fidelidade`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm run start`
+   - **Plan**: Free ou Starter
+
+3. Após o deploy, o Render fornecerá sua URL pública segura HTTPS (ex: `https://gmc-bagy-fidelidade.onrender.com`).
+
+
 ---
 
 ## 🌟 Principais Recursos & Conformidade com o Google
