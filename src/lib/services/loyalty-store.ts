@@ -1,6 +1,8 @@
 import {
   LoyaltyTier,
   LoyaltyMember,
+  CustomerProfile,
+  CustomerAddress,
   PointsTransaction,
   BagyCoupon,
   ProductCatalogItem,
@@ -244,7 +246,30 @@ export const INITIAL_MEMBERS: LoyaltyMember[] = [
     joinedAt: '2025-08-14T10:30:00Z',
     updatedAt: '2026-02-10T14:22:00Z',
     googleAccountLinked: true,
-    status: 'ACTIVE'
+    status: 'ACTIVE',
+    profile: {
+      cpf: '284.912.845-09',
+      birthDate: '1992-05-18',
+      gender: 'F',
+      phone: '(11) 98765-4321',
+      address: {
+        cep: '01415-001',
+        street: 'Rua Bela Cintra',
+        number: '1240',
+        complement: 'Apto 82',
+        neighborhood: 'Consolação',
+        city: 'São Paulo',
+        state: 'SP'
+      },
+      favoriteBrands: ['Lacoste', 'Reserva', 'Calvin Klein'],
+      preferredSizes: {
+        shirts: 'M',
+        shoes: '37'
+      },
+      receiveWhatsappNotifications: true,
+      receiveEmailNotifications: true,
+      profileCompleted: true
+    }
   },
   {
     id: 'mem-002',
@@ -564,6 +589,79 @@ class LoyaltyStore {
     });
 
     return newMember;
+  }
+
+  public updateMemberProfile(email: string, profileData: Partial<CustomerProfile>): { member: LoyaltyMember; bonusAwarded: boolean } {
+    let member = this.getMemberByEmail(email);
+    if (!member) {
+      member = this.createOrUpdateMember({
+        email,
+        name: email.split('@')[0],
+        googleAccountLinked: true
+      });
+    }
+
+    const wasAlreadyCompleted = Boolean(member.profile?.profileCompleted);
+    const hasAddress = Boolean(
+      profileData.address?.cep && 
+      profileData.address?.street && 
+      profileData.address?.number && 
+      profileData.address?.city && 
+      profileData.address?.state
+    );
+    const isNowComplete = Boolean(profileData.cpf && profileData.birthDate && profileData.phone && hasAddress);
+
+    const fullProfile: CustomerProfile = {
+      cpf: profileData.cpf || member.profile?.cpf || '',
+      birthDate: profileData.birthDate || member.profile?.birthDate || '',
+      gender: profileData.gender || member.profile?.gender || 'PREFER_NOT_TO_SAY',
+      phone: profileData.phone || member.phone || member.profile?.phone || '',
+      address: {
+        cep: profileData.address?.cep || member.profile?.address?.cep || '',
+        street: profileData.address?.street || member.profile?.address?.street || '',
+        number: profileData.address?.number || member.profile?.address?.number || '',
+        complement: profileData.address?.complement ?? member.profile?.address?.complement ?? '',
+        neighborhood: profileData.address?.neighborhood || member.profile?.address?.neighborhood || '',
+        city: profileData.address?.city || member.profile?.address?.city || '',
+        state: profileData.address?.state || member.profile?.address?.state || 'SP',
+      },
+      favoriteBrands: profileData.favoriteBrands || member.profile?.favoriteBrands || ['Lacoste', 'Reserva'],
+      preferredSizes: profileData.preferredSizes || member.profile?.preferredSizes || { shirts: 'M', shoes: '41' },
+      receiveWhatsappNotifications: profileData.receiveWhatsappNotifications ?? member.profile?.receiveWhatsappNotifications ?? true,
+      receiveEmailNotifications: profileData.receiveEmailNotifications ?? member.profile?.receiveEmailNotifications ?? true,
+      profileCompleted: isNowComplete
+    };
+
+    member.profile = fullProfile;
+    if (fullProfile.phone) {
+      member.phone = fullProfile.phone;
+    }
+    member.updatedAt = new Date().toISOString();
+
+    let bonusAwarded = false;
+    // Award +150 bonus points if completing profile for the first time
+    if (!wasAlreadyCompleted && isNowComplete) {
+      member.pointsBalance += 150;
+      member.totalPointsEarned += 150;
+      this.addTransaction({
+        memberId: member.id,
+        type: 'EARNED_BONUS',
+        points: 150,
+        description: 'Bônus exclusivo por completar Cadastro de Perfil Brasil (+150 pts)'
+      });
+      bonusAwarded = true;
+    }
+
+    this.members.set(email.toLowerCase(), member);
+
+    // Also update AuthUser points if present
+    const user = this.users.get(email.toLowerCase());
+    if (user) {
+      user.pointsBalance = member.pointsBalance;
+      this.users.set(email.toLowerCase(), user);
+    }
+
+    return { member, bonusAwarded };
   }
 
   public addPoints(email: string, points: number, description: string, bagyOrderId?: string): LoyaltyMember {

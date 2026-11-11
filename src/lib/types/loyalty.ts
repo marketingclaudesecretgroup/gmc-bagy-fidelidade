@@ -36,6 +36,32 @@ export interface LoyaltyTier {
   perks: string[];
 }
 
+export interface CustomerAddress {
+  cep: string;
+  street: string;
+  number: string;
+  complement?: string;
+  neighborhood: string;
+  city: string;
+  state: string; // UF: SP, RJ, MG, etc.
+}
+
+export interface CustomerProfile {
+  cpf: string;
+  birthDate: string; // DD/MM/AAAA or YYYY-MM-DD
+  gender?: 'M' | 'F' | 'OTHER' | 'PREFER_NOT_TO_SAY';
+  phone: string;
+  address: CustomerAddress;
+  favoriteBrands?: string[];
+  preferredSizes?: {
+    shirts?: string; // P, M, G, GG, XGG
+    shoes?: string;  // 38, 39, 40, 41, 42, 43, 44
+  };
+  receiveWhatsappNotifications: boolean;
+  receiveEmailNotifications: boolean;
+  profileCompleted: boolean;
+}
+
 export interface LoyaltyMember {
   id: string;
   bagyCustomerId: string;
@@ -52,6 +78,7 @@ export interface LoyaltyMember {
   updatedAt: string;
   googleAccountLinked: boolean;
   status: 'ACTIVE' | 'INACTIVE';
+  profile?: CustomerProfile;
 }
 
 export interface PointsTransaction {

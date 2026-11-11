@@ -20,9 +20,12 @@ import {
   ExternalLink,
   Percent,
   Clock,
-  Award
+  Award,
+  User,
+  MapPin
 } from 'lucide-react';
 import Link from 'next/link';
+import CustomerProfileForm from '@/components/loyalty/CustomerProfileForm';
 
 export default function MembroPortalPage() {
   const { user, isAuthenticated, isLoading, refreshUser } = useAuth();
@@ -33,6 +36,7 @@ export default function MembroPortalPage() {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [redeeming, setRedeeming] = useState<boolean>(false);
   const [feedbackMsg, setFeedbackMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [activeTab, setActiveTab] = useState<'overview' | 'profile'>('overview');
 
   // Authentication Guard
   useEffect(() => {
@@ -118,6 +122,17 @@ export default function MembroPortalPage() {
     }
   };
 
+  const handleProfileUpdated = async (updatedMember: any, bonusAwarded: boolean) => {
+    await loadMemberDetails();
+    await refreshUser();
+    if (bonusAwarded) {
+      setFeedbackMsg({
+        type: 'success',
+        text: '🎉 Parabéns! Você completou seu perfil e ganhou +150 pontos no Clube Fidelidade Secret Outlet!'
+      });
+    }
+  };
+
   if (isLoading || (!memberData && loadingData)) {
     return (
       <div className="py-24 text-center text-sm text-slate-400 flex flex-col items-center justify-center gap-3">
@@ -134,6 +149,7 @@ export default function MembroPortalPage() {
   const coupons = memberData?.coupons || [];
   const transactions = memberData?.transactions || [];
 
+  const isProfileCompleted = Boolean(member?.profile?.profileCompleted);
   const pointsValueInBrl = ((member?.pointsBalance || 0) * 0.05).toFixed(2);
 
   // Spend progress
@@ -185,6 +201,80 @@ export default function MembroPortalPage() {
         </div>
       </div>
 
+      {/* Profile Incomplete Notification Banner */}
+      {!isProfileCompleted && (
+        <div className="rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-amber-500/15 via-indigo-500/15 to-emerald-500/15 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-amber-950/20">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                <span>Complete seu Perfil Brasil</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">
+                  +150 Pontos de Bônus
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 mt-0.5">
+                Preencha seu CPF e endereço para emissão de Nota Fiscal e ativação imediata do Frete Grátis exclusivo nos pedidos da Secret Outlet.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setActiveTab('profile')}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold text-xs transition-all shrink-0 flex items-center gap-1.5 shadow-md shadow-amber-500/25"
+          >
+            <span>Preencher Agora</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
+      {/* Tab Switcher: Overview vs Brazilian Profile */}
+      <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+        <button
+          onClick={() => setActiveTab('overview')}
+          className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+            activeTab === 'overview'
+              ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+              : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
+          }`}
+        >
+          <TrendingUp className="w-4 h-4" />
+          <span>Visão Geral & Extrato</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('profile')}
+          className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+            activeTab === 'profile'
+              ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+              : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
+          }`}
+        >
+          <User className="w-4 h-4" />
+          <span>Meu Perfil Brasil 🇧🇷</span>
+          {isProfileCompleted ? (
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              ✓ Completo
+            </span>
+          ) : (
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse">
+              +150 pts
+            </span>
+          )}
+        </button>
+      </div>
+
+      {activeTab === 'profile' ? (
+        <CustomerProfileForm
+          initialProfile={member.profile}
+          userEmail={user?.email || member.email}
+          userName={member.name}
+          onProfileUpdated={handleProfileUpdated}
+        />
+      ) : (
+        <>
       {/* Primary Status Grid: Balance + Tier Progress + Benefits */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Points Card */}
@@ -493,17 +583,41 @@ export default function MembroPortalPage() {
           <Sparkles className="w-4 h-4 text-yellow-400" />
           Missões para Ganhar Pontos Extras
         </h3>
-        <p className="text-xs text-slate-400">Acelere sua subida de nível completando ações simples</p>
+        <p className="text-xs text-slate-400">Acelere sua subida de nível completando ações simples no ecossistema Secret Outlet</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          {/* Mission 1 */}
           <div className="p-4 rounded-xl bg-slate-900/60 border border-white/5 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-white">Vincular Conta Google</span>
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Concluído</span>
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Concluído</span>
             </div>
             <p className="text-xs text-slate-400">Garante frete grátis e visualização de vantagens nas buscas.</p>
           </div>
 
+          {/* Mission 2: Perfil Brasil */}
+          <div className="p-4 rounded-xl bg-slate-900/60 border border-white/5 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-white">Completar Perfil Brasil</span>
+              {isProfileCompleted ? (
+                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Concluído</span>
+              ) : (
+                <button
+                  onClick={() => setActiveTab('profile')}
+                  className="text-[10px] font-mono text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30 hover:bg-amber-500/30 transition-colors"
+                >
+                  +150 pts
+                </button>
+              )}
+            </div>
+            <p className="text-xs text-slate-400">
+              {isProfileCompleted 
+                ? 'Dados cadastrais e endereço salvos com sucesso.'
+                : 'Cadastre CPF e endereço para emissão de NF e frete.'}
+            </p>
+          </div>
+
+          {/* Mission 3 */}
           <div className="p-4 rounded-xl bg-slate-900/60 border border-white/5 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-white">Avaliar Produto Adquirido</span>
@@ -512,6 +626,7 @@ export default function MembroPortalPage() {
             <p className="text-xs text-slate-400">Deixe um review sincero com foto na loja após receber sua encomenda.</p>
           </div>
 
+          {/* Mission 4 */}
           <div className="p-4 rounded-xl bg-slate-900/60 border border-white/5 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-white">Aniversário do Membro</span>
@@ -521,6 +636,8 @@ export default function MembroPortalPage() {
           </div>
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 }
